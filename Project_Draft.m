@@ -17,7 +17,7 @@ function Project_Draft()
 
     rect = [182.5100  118.5100  573.9800  445.9800];
     im_cropped = imcrop(im_resized, rect);
-    figure, imshow(im_cropped);
+    figure, imshow(im_cropped), title("cropped image");
 
     % sharpening the image
 
@@ -29,8 +29,8 @@ function Project_Draft()
     % Applying gaussian filter to smoothen the image
 
     if (apply_gaussian_filter)
-        my_filter = fspecial('gaussian', [10 10], 0.75);
-        im_smooth = imfilter( im_sharpened, my_filter, 'same', 'repl');
+        fltr_gauss = fspecial('gaussian', [10 10], 0.75);
+        im_smooth = imfilter( im_sharpened, fltr_gauss, 'same', 'repl');
         figure, imagesc(im_smooth);
         im_lab = rgb2lab(im_smooth);
         a_channel = im_lab(:,:,2);
@@ -71,6 +71,38 @@ function Project_Draft()
     im_lab = rgb2lab(im_sharpened);
     a_channel = im_lab(:,:,2);
     im_gray = a_channel;
-    figure, imagesc(im_gray);
+    figure, imagesc(im_gray), title("a- grayscale image");
+
+    % applying sobel filter to find edge magnitudes
+
+    fltr_sobel_dIdy = [ -1 -2 -1 ; 
+                         0  0  0 ; 
+                        +1 +2 +1 ] /8;
+    
+    fltr_sobel_dIdx = fltr_sobel_dIdy.';
+        
+    dIdy = imfilter(im_gray, fltr_sobel_dIdy, 'same', 'repl');
+    dIdx = imfilter(im_gray, fltr_sobel_dIdx, 'same', 'repl');
+    dImag = sqrt( dIdy.^2  + dIdx.^2 );
+    figure, imshow(dImag), title("dImag");
+
+    % histogram analysis for egde magnitudes near the center leaves
+
+    mag_min = min(dImag, [], 'all');
+    mag_max = max(dImag, [], 'all');
+    histogram_bin_edges = mag_min:0.001:mag_max;
+%     histogram_bin_edges = 0:0.001:0.500;
+
+    [freq,bins] = histcounts( dImag(:), histogram_bin_edges );
+    tmp_sum = cumsum(freq);
+    norm = tmp_sum ./ tmp_sum(end);
+    index = find(norm>0.90,1,'first');
+    cut_off_value = histogram_bin_edges(index);
+    disp(cut_off_value);
+
+    im_strong_edges = dImag>cut_off_value;
+    im_strong_edges = ~im_strong_edges;
+
+    figure, imshow(im_strong_edges), title("after determining edge strength");
 
 end
