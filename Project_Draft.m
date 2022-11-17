@@ -98,11 +98,17 @@ function Project_Draft()
     norm = tmp_sum ./ tmp_sum(end);
     index = find(norm>0.90,1,'first');
     cut_off_value = histogram_bin_edges(index);
-    disp(cut_off_value);
+%     disp(cut_off_value);
 
     im_strong_edges = dImag>cut_off_value;
     im_strong_edges = ~im_strong_edges;
 
     figure, imshow(im_strong_edges), title("after determining edge strength");
+
+    % perform morphology
+
+%     st = strel('square',3);
+%     im_closed = imclose(im_strong_edges, st);
+%     figure, imshow(im_closed), title("final shape of the leaves");
 
 end
