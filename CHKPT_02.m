@@ -9,6 +9,11 @@ function CHKPT_02()
     im_lab = rgb2lab(im_crop);
     a_channel = im_lab(:,:,2);
     figure, imagesc(a_channel);
+
+    thresh = graythresh(a_channel);
+    im_binarized = imbinarize(a_channel, thresh);
+    im_binarized = ~(im_binarized);
+    figure, imshow(im_binarized);
 %     figure, histogram(a_channel);
 %     mask = a_channel>-2.5 & a_channel<0.5;
 %     a_new = (~mask) == 1;

@@ -6,7 +6,7 @@ function Project_Draft()
 
     % read image
 
-    im_rgb = im2double(imread("IMAGES/IMG_3127.JPG"));
+    im_rgb = im2double(imread("IMAGES/IMG_3422.JPG"));
     figure, imshow(im_rgb), title("Original image");
 
 %     disp(size(im_in));
@@ -96,7 +96,7 @@ function Project_Draft()
     [freq,bins] = histcounts( dImag(:), histogram_bin_edges );
     tmp_sum = cumsum(freq);
     norm = tmp_sum ./ tmp_sum(end);
-    index = find(norm>0.90,1,'first');
+    index = find(norm>0.95,1,'first');
     cut_off_value = histogram_bin_edges(index);
 %     disp(cut_off_value);
 
@@ -104,6 +104,12 @@ function Project_Draft()
     im_strong_edges = ~im_strong_edges;
 
     figure, imshow(im_strong_edges), title("after determining edge strength");
+
+%     im_unsigned = uint8(im_strong_edges);
+% 
+%     thresh = graythresh(im_unsigned);
+%     im_binarized = imbinarize(im_unsigned, thresh);
+%     figure, imshow(im_binarized);
 
     % perform morphology
 
