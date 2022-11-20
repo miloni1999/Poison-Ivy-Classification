@@ -6,7 +6,7 @@ function Project_Draft()
 
     % read image
 
-    im_rgb = im2double(imread("IMAGES/IMG_3158.JPG"));
+    im_rgb = im2double(imread("IMAGES/IMG_3422.JPG"));
     figure, imshow(im_rgb), title("Original image");
 
 %     disp(size(im_in));
@@ -17,7 +17,7 @@ function Project_Draft()
 
 %     rect = [182.5100  118.5100  573.9800  445.9800];
 %     rect = [160.5100   34.5100  547.9800  477.9800];
-    rect = [160.5100   34.5100  593.9800  550.9800];
+    rect = [182.5100   118.5100  573.9800  477.9800];
     im_cropped = imcrop(im_resized, rect);
     figure, imshow(im_cropped), title("cropped image");
 
@@ -123,7 +123,7 @@ function Project_Draft()
 %         imshow(val);
 %     end
 
-    imwrite(im_binarized, "IMG_3158.jpg");
+%     imwrite(im_binarized, "IMG_3127.jpg");
 
     % perform morphology
 

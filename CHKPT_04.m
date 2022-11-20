@@ -64,7 +64,7 @@ function b_is_fg = chpt4_FIND_poison_ivy(img,rect)
     end
     
     function chpt4_isolate_poison_ivy()
-    I = rgb2lab(im2double( imread("IMAGES/IMG_3422.JPG")));
+    I = rgb2lab(im2double( imread("IMAGES/IMG_3149.JPG")));
     % figure, imshow(I);
     % title("original image");
     % im_r = I(:,:,1);
@@ -131,11 +131,11 @@ function b_is_fg = chpt4_FIND_poison_ivy(img,rect)
     title("final shape of the leaves");
 
 %     output_img = ~output_img;
-    im_unsigned = uint8(output_img);
-
-    thresh = graythresh(im_unsigned);
-    im_binarized = imbinarize(im_unsigned, thresh);
-    figure, imshow(im_binarized);
+%     im_unsigned = uint8(output_img);
+% 
+%     thresh = graythresh(im_unsigned);
+%     im_binarized = imbinarize(im_unsigned, thresh);
+%     figure, imshow(im_binarized);
 %     imwrite(closed,'after_closing.png');
 
 end
