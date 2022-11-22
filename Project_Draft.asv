@@ -3,7 +3,7 @@ function Project_Draft()
 
     % read image
 
-    im_rgb = im2double(imread("POISON/IMG_3149_P.JPG"));
+    im_rgb = im2double(imread("IMAGES/IMG_3422_P.JPG"));
     figure, imshow(im_rgb), title("Original image");
 
 %     im_rgb = round(im_rgb * 16) / 16;
@@ -20,8 +20,8 @@ function Project_Draft()
 %     im_cropped = imcrop(im_rgb, rect);
 %     [im_cropped, rect] = imcrop(im_rgb);
 %     disp(rect);
-%     rect = 1.0e+03 *[1.3555    0.6945    3.5820    3.0180];
-    rect = 1.0e+03 *[1.0795    0.2205    3.8820    3.4500];
+    rect = 1.0e+03 *[1.3555    0.6945    3.5820    3.0180];
+%     rect = 1.0e+03 *[1.0795    0.2205    3.5820    3.1500];
 %     rect = 1.0e+03 *[1.0795    0.6945    3.7820    3.2500];
     im_cropped = imcrop(im_rgb, rect);
     figure, imshow(im_cropped), title("cropped image");

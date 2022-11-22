@@ -89,7 +89,7 @@ function b_is_fg = chpt4_FIND_poison_ivy(img,rect)
     [freq,bins] = histcounts( dImag(:), histogram_bin_edges );
     tmp_sum = cumsum(freq);
     norm = tmp_sum ./ tmp_sum(end);
-    idx = find(norm>0.95,1,'first');
+    idx = find(norm>0.90,1,'first');
     cut_off_val = histogram_bin_edges(idx);
     disp(cut_off_val);
     

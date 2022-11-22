@@ -3,7 +3,7 @@ function Project_Draft()
 
     % read image
 
-    im_rgb = im2double(imread("POISON/IMG_3149_P.JPG"));
+    im_rgb = im2double(imread("IMAGES/IMG_3127_P.JPG"));
     figure, imshow(im_rgb), title("Original image");
 
 %     im_rgb = round(im_rgb * 16) / 16;
