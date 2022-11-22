@@ -5,7 +5,7 @@ function build_classifier( )
 %
 %  '20-Jul-2020'    Thomas B. Kinsman
 %
-input_dir      = 'IMAGES';
+input_dir      = 'POISON';
 TEACHING    = false;
 
     screw_classes                   = 'PN';
