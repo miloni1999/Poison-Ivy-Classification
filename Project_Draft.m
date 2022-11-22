@@ -6,8 +6,11 @@ function Project_Draft()
 
     % read image
 
-    im_rgb = im2double(imread("IMAGES/IMG_3158.JPG"));
+    im_rgb = im2double(imread("IMAGES/IMG_3149.JPG"));
     figure, imshow(im_rgb), title("Original image");
+
+%     im_rgb = round(im_rgb * 16) / 16;
+%     figure, imshow(im_rgb), title("after noise removal");
 
 %     disp(size(im_in));
 
@@ -123,7 +126,7 @@ function Project_Draft()
 %         imshow(val);
 %     end
 
-    imwrite(im_binarized, "IMG_3158.jpg");
+%     imwrite(im_binarized, "IMG_3158.jpg");
 
     % perform morphology
 
