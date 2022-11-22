@@ -5,7 +5,7 @@ function build_classifier( )
 %
 %  '20-Jul-2020'    Thomas B. Kinsman
 %
-input_dir      = 'POISON';
+
 TEACHING    = true;
 
     screw_classes                   = 'PN';
@@ -17,7 +17,15 @@ TEACHING    = true;
         this_cls_letter = screw_classes(class_id);
 %         file_pattrn     = sprintf('%s%cim_type_%c*.jpg', input_dir, filesep(), this_cls_letter );
 %         training_files  = dir( file_pattrn );
-        training_files = dir("POISON/*.jpg");
+        if class_id == 1
+            dir_name = "POISON/*.JPG";
+            input_dir = 'POISON';
+        else
+            dir_name = "NON_POISON/*.JPG";
+            input_dir = 'NON_POISON';
+        end
+%         dir_name = sprintf("POISON/*%s", image_suffix);
+        training_files = dir(dir_name);
 
         for idx = 1 : length( training_files )
 
@@ -25,6 +33,9 @@ TEACHING    = true;
 
             fn_in       = sprintf('%s%c%s', input_dir, filesep(), training_files(idx).name );
             fprintf('%s\n', fn_in );
+%             fn_in = convertCharsToStrings(fn_in);
+%             disp(fn_in);
+%             disp(class(fn_in));
 
             im_in     = imread( fn_in );
 
@@ -36,6 +47,7 @@ TEACHING    = true;
             %
             %
             %  CHANGE ME:  YOU NEED TO WRITE THIS ROUTINE...
+%             disp("HI");
             im_cleaned  = clean_image( im_in );
 
             %
@@ -66,7 +78,7 @@ TEACHING    = true;
             if ( TEACHING == true )
                 imagesc( im_cleaned );
                 colormap( copper );
-                title( ['Screws of Class  ', this_cls_letter, '  '], ...
+                title( ['Leaves of Class  ', this_cls_letter, '  '], ...
                        'FontSize', 32 );
                 axis image;
                 drawnow;
@@ -91,16 +103,16 @@ TEACHING    = true;
     %
     %  setup and fill in a confusion_matrix
     %
-%     con_mat = zeros(length(screw_classes));
-%     for instance_id = 1 : size( collected_feats, 1 )
-%         true_cls                        = class_list( instance_id );
-%         pred_cls                        = tree_classifier.predict( collected_feats(instance_id,:) );
-%         con_mat( pred_cls, true_cls )   = con_mat( pred_cls, true_cls ) + 1;
-%     end
-% 
-%     print_mat( con_mat, 1, 'confusion_matrix_on_training_data', 0 );
-%     fprintf('\n\n');
-% 
+    con_mat = zeros(length(screw_classes));
+    for instance_id = 1 : size( collected_feats, 1 )
+        true_cls                        = class_list( instance_id );
+        pred_cls                        = tree_classifier.predict( collected_feats(instance_id,:) );
+        con_mat( pred_cls, true_cls )   = con_mat( pred_cls, true_cls ) + 1;
+    end
+
+    print_mat( con_mat, 1, 'confusion_matrix_on_training_data', 0 );
+    fprintf('\n\n');
+
 %     save tree_classifier_634.mat tree_classifier;
         
 end

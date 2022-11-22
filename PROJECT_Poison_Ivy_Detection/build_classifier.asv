@@ -5,29 +5,31 @@ function build_classifier( )
 %
 %  '20-Jul-2020'    Thomas B. Kinsman
 %
-input_dir      = 'POISON';
-TEACHING    = false;
+input_dir      = 'Trainin';
+TEACHING    = true;
 
     screw_classes                   = 'PN';
 
     initialize_the_feature_table    = true;
-    
-    if ( TEACHING == true )
-        zoom_figure( [1400 1400] );
-    end
 
     for class_id = 1:length(screw_classes)
 
         this_cls_letter = screw_classes(class_id);
-        file_pattrn     = sprintf('%s%cim_type_%c*.jpg', input_dir, filesep(), this_cls_letter );
-        training_files  = dir( file_pattrn );
+%         file_pattrn     = sprintf('%s%cim_type_%c*.jpg', input_dir, filesep(), this_cls_letter );
+%         training_files  = dir( file_pattrn );
+        training_files = dir("POISON/*.jpg");
 
         for idx = 1 : length( training_files )
 
-            fn_in       = sprintf('%s%c%s', input_dir, filesep(), training_files(idx).name );
-            fprintf('%s\n', fn_in );
+%             fn_in       = training_files(idx).name;
 
-            im_gray     = rgb2gray( imread( fn_in ) );
+            fn_in       = sprintf('%s%c%s', input_dir, filesep(), training_files(idx).name );
+%             fprintf('%s\n', fn_in );
+%             fn_in = convertCharsToStrings(fn_in);
+%             disp(fn_in);
+%             disp(class(fn_in));
+
+            im_in     = imread( fn_in );
 
             %
             %  DO NOISE CLEANING ON THE IMAGE.
@@ -37,7 +39,8 @@ TEACHING    = false;
             %
             %
             %  CHANGE ME:  YOU NEED TO WRITE THIS ROUTINE...
-            im_cleaned  = clean_image_SKELETON( im_gray );
+%             disp("HI");
+            im_cleaned  = clean_image( im_in );
 
             %
             %  EXTRACT FEATURES FROM THE IMAGE.
@@ -51,7 +54,7 @@ TEACHING    = false;
             %  I don't even know what the features are.
             %
             %  CHANGE ME:  YOU NEED TO WRITE THIS ROUTINE...
-            feats       = get_features_SKELETON( im_cleaned );
+            feats       = get_features( im_cleaned );
             n_new       = size( feats, 1 );
 
             if ( initialize_the_feature_table == true )
@@ -67,7 +70,7 @@ TEACHING    = false;
             if ( TEACHING == true )
                 imagesc( im_cleaned );
                 colormap( copper );
-                title( ['Screws of Class  ', this_cls_letter, '  '], ...
+                title( ['Leaves of Class  ', this_cls_letter, '  '], ...
                        'FontSize', 32 );
                 axis image;
                 drawnow;
@@ -92,17 +95,17 @@ TEACHING    = false;
     %
     %  setup and fill in a confusion_matrix
     %
-    con_mat = zeros(length(screw_classes));
-    for instance_id = 1 : size( collected_feats, 1 )
-        true_cls                        = class_list( instance_id );
-        pred_cls                        = tree_classifier.predict( collected_feats(instance_id,:) );
-        con_mat( pred_cls, true_cls )   = con_mat( pred_cls, true_cls ) + 1;
-    end
-
-    print_mat( con_mat, 1, 'confusion_matrix_on_training_data', 0 );
-    fprintf('\n\n');
-
-    save tree_classifier_634.mat tree_classifier;
+%     con_mat = zeros(length(screw_classes));
+%     for instance_id = 1 : size( collected_feats, 1 )
+%         true_cls                        = class_list( instance_id );
+%         pred_cls                        = tree_classifier.predict( collected_feats(instance_id,:) );
+%         con_mat( pred_cls, true_cls )   = con_mat( pred_cls, true_cls ) + 1;
+%     end
+% 
+%     print_mat( con_mat, 1, 'confusion_matrix_on_training_data', 0 );
+%     fprintf('\n\n');
+% 
+%     save tree_classifier_634.mat tree_classifier;
         
 end
 

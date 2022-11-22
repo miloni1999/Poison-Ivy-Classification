@@ -9,16 +9,18 @@ function im_binarized = clean_image( im_in )
 %  or delete the outside margin.
 %
 
+%     disp(im_in);
+    disp(class(im_in));
     % read image
 
-    im_rgb = im2double(imread(im_in));
+    im_rgb = im2double(im_in);
     figure, imshow(im_rgb), title("Original image");
 
     % crop image
 
     rect = 1.0e+03 *[1.0795    0.2205    3.8820    3.4500];
     im_cropped = imcrop(im_rgb, rect);
-    figure, imshow(im_cropped), title("cropped image");
+%     figure, imshow(im_cropped), title("cropped image");
 
     % grayscale image
 
@@ -38,7 +40,7 @@ function im_binarized = clean_image( im_in )
     dIdy = imfilter(im_gray, fltr_sobel_dIdy, 'same', 'repl');
     dIdx = imfilter(im_gray, fltr_sobel_dIdx, 'same', 'repl');
     dImag = sqrt( dIdy.^2  + dIdx.^2 );
-    figure, imshow(dImag), title("dImag");
+%     figure, imshow(dImag), title("dImag");
 
     % histogram analysis for egde magnitudes near the center leaves
 
@@ -53,7 +55,7 @@ function im_binarized = clean_image( im_in )
     im_strong_edges = dImag>cut_off_value;
     im_strong_edges = ~im_strong_edges;
 
-    figure, imshow(im_strong_edges), title("after determining edge strength");
+%     figure, imshow(im_strong_edges), title("after determining edge strength");
 
     % find modal color
 
@@ -67,13 +69,13 @@ function im_binarized = clean_image( im_in )
             end
         end
     end
-    figure, imshow(output_img), title("after getting shape of the leaves");
+%     figure, imshow(output_img), title("after getting shape of the leaves");
 
     % morphology operations
 
     st = strel('disk',4);
     closed = imclose(output_img,st);
-    figure, imshow(closed), title("final shape of the leaves");
+%     figure, imshow(closed), title("final shape of the leaves");
 
     % binarizing image
 

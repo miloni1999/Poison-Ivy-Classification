@@ -11,8 +11,8 @@ function im_binarized = clean_image( im_in )
 
     % read image
 
-    im_rgb = im2double(imread(im_in));
-    figure, imshow(im_rgb), title("Original image");
+    im_rgb = im2double(im_in);
+%     figure, imshow(im_rgb), title("Original image");
 
     % crop image
 
@@ -25,7 +25,7 @@ function im_binarized = clean_image( im_in )
     im_lab = rgb2lab(im_cropped);
     a_channel = im_lab(:,:,2);
     im_gray = a_channel;
-    figure, imagesc(im_gray), title("a- grayscale image");
+%     figure, imagesc(im_gray), title("a- grayscale image");
 
     % applying sobel filter to find edge magnitudes
 
@@ -80,12 +80,12 @@ function im_binarized = clean_image( im_in )
     im_unsigned = uint16(closed);
     thresh = graythresh(im_unsigned);
     im_binarized = imbinarize(im_unsigned, thresh);
-    figure, imshow(im_binarized), title("binarized image");
+%     figure, imshow(im_binarized), title("binarized image");
 
 end
 
 function b_is_fg = get_poison_ivy_leaves(img)
-    h=imshow(img);
+    h=image(img);
     im=imagemodel(h);
     fg_pixelvalues = [1     0     1;
          1     0     1;
@@ -103,7 +103,7 @@ function b_is_fg = get_poison_ivy_leaves(img)
          1     0     1;
          1     0     1;
          1     0     1];
-    h=imshow(img);
+    h=image(img);
     im=imagemodel(h);
     bg_pixelvalues = [1     0     1
          1     0     1;
