@@ -10,16 +10,13 @@ function feature_mat = get_features(im_cleaned)
     %
     %  YOU MAY ADD OTHER FEATURES HERE:
     %
-%     im_cleaned = clean_image("../POISON/IMG_3127_P.JPG");
     feature_tbl = regionprops( 'table', im_cleaned, 'Area', 'MajorAxisLength', 'MinorAxisLength' );  
-%     disp(feature_tbl);
 
     %  Explicitly toss out small DIRT particles:
     % You should change this.  CHANGE ME!!
-    b_too_small                     = feature_tbl.Area <= 5000;  % 50^2 pixels.  
+    b_too_small                     = feature_tbl.Area <= 5000;
     
     feature_tbl(b_too_small,:)      = [];
-%     disp(b_too_small);
 
     if ( size(feature_tbl,1) == 0 )
         %  THIS IS DIRT:
@@ -37,6 +34,5 @@ function feature_mat = get_features(im_cleaned)
 %             feature_mat(row,5) = feature_tbl{row,5};
         end
     end
-%     disp(feature_mat);
 end
 
