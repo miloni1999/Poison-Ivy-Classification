@@ -91,8 +91,6 @@ TEACHING    = true;
     %
     % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     tree_classifier = fitctree( collected_feats, class_list );
-
-    
     
     %
     %  Test using the tree -- Create a Confusion Matrix:
@@ -109,7 +107,7 @@ TEACHING    = true;
     print_mat( con_mat, 1, 'confusion_matrix_on_training_data', 0 );
     fprintf('\n\n');
 
-%     save tree_classifier_634.mat tree_classifier;
+    save tree_classifier_634.mat tree_classifier;
         
 end
 
