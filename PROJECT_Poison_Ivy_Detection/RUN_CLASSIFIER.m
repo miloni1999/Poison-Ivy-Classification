@@ -1,7 +1,7 @@
 function RUN_CLASSIFIER( )
-in_dir_name  = 'Image_testing/*.JPG';  % Or whatever
-in_dir = 'Image_testing';
-out_dir     = 'Images_classified';
+in_dir_name  = 'TEST/*.JPG';  % Or whatever
+in_dir = 'TEST';
+% out_dir     = 'Images_classified';
 % vers        = get_fn_version( mfilename() );
 count_P = 0;
 count_NP = 0;
