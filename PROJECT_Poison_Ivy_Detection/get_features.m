@@ -14,9 +14,11 @@ function feature_mat = get_features(im_cleaned)
 
     %  Explicitly toss out small DIRT particles:
     % You should change this.  CHANGE ME!!
-    b_too_small                     = feature_tbl.Area <= 5000;  % 50^2 pixels.  
+    b_too_small                     = feature_tbl.Area <= 5000;
     
     feature_tbl(b_too_small,:)      = [];
+    disp("Feature Table after tossing out dirt components");
+    disp(feature_tbl);
     disp("Feature Table after tossing out dirt components");
     disp(feature_tbl);
 

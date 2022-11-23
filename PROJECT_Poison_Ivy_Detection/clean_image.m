@@ -1,4 +1,4 @@
-function im_binarized = clean_image( im_in )
+function im_cleaned = clean_image( im_in )
 %  This encapsulates the noise cleaning part of the imaging chain.
 %  
 %  Add any noise cleaning here you want to do.
@@ -43,7 +43,6 @@ function im_binarized = clean_image( im_in )
     % histogram analysis for egde magnitudes near the center leaves
 
     histogram_bin_edges = 0:0.001:0.500;
-
     [freq,bins] = histcounts( dImag(:), histogram_bin_edges );
     tmp_sum = cumsum(freq);
     norm = tmp_sum ./ tmp_sum(end);
@@ -57,12 +56,12 @@ function im_binarized = clean_image( im_in )
 
     % find modal color
 
-    poison_ivy_fg = get_poison_ivy_leaves(im_lab);
+    modal_leaves = get_center_leaves(im_lab);
     [row,col] = size(im_strong_edges); 
     output_img = ones(row,col);
     for r = 1:row    
         for c = 1:col 
-            if im_strong_edges(r,c) == poison_ivy_fg(r,c)
+            if im_strong_edges(r,c) == modal_leaves(r,c)
                 output_img(r,c) = im_strong_edges(r,c);
             end
         end
@@ -72,19 +71,19 @@ function im_binarized = clean_image( im_in )
     % morphology operations
 
     st = strel('disk',4);
-    closed = imclose(output_img,st);
+    im_closed = imclose(output_img,st);
 %     figure, imshow(closed), title("final shape of the leaves");
 
     % binarizing image
 
-    im_unsigned = uint16(closed);
+    im_unsigned = uint16(im_closed);
     thresh = graythresh(im_unsigned);
-    im_binarized = imbinarize(im_unsigned, thresh);
+    im_cleaned = imbinarize(im_unsigned, thresh);
 %     figure, imshow(im_binarized), title("binarized image");
 
 end
 
-function b_is_fg = get_poison_ivy_leaves(img)
+function center_leaves = get_center_leaves(img)
     h=image(img);
     im=imagemodel(h);
     fg_pixelvalues = [1     0     1;
@@ -126,9 +125,9 @@ function b_is_fg = get_poison_ivy_leaves(img)
     new_rows = r*c;
     Y = reshape(img,[new_rows,channels]);
     
-    distance_poison_ivy = mahal(Y,fg_pixelvalues);
+    distance_fg = mahal(Y,fg_pixelvalues);
     distance_bg = mahal(Y,bg_pixelvalues);
     
-    b_is_fg = distance_poison_ivy < distance_bg;
-    b_is_fg = reshape( b_is_fg, r, c );
+    center_leaves = distance_fg < distance_bg;
+    center_leaves = reshape( center_leaves, r, c );
 end
