@@ -1,7 +1,9 @@
 function build_classifier( )
-%  This tests the use of the DecisionTree Classifiers to classify Poison Ivy and Non Poison Ivy leaves.
+%  This tests the use of the DecisionTree Classifiers to classify Poison and Non Poison.
 %
-%  '22-Nov-2022'    Miloni Sangani  Rasika Sasturkar Harshil Patel
+%  "doc Classification Trees" for more information...
+%
+%  '20-Jul-2020'    Thomas B. Kinsman
 %
 
 TEACHING    = true;
