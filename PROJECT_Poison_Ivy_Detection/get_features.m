@@ -10,22 +10,17 @@ function feature_mat = get_features(im_cleaned)
     %
     %  YOU MAY ADD OTHER FEATURES HERE:
     %
-<<<<<<< HEAD
-    feature_tbl = regionprops( 'table', im_cleaned, 'Area', 'MajorAxisLength', 'MinorAxisLength' );  
-=======
     feature_tbl = regionprops( 'table', im_cleaned, 'Area', 'MajorAxisLength', 'MinorAxisLength','ConvexArea' );  
->>>>>>> 331e5174a866ae05b8b1f96eb22ec67f64f8fdf7
 
     %  Explicitly toss out small DIRT particles:
     % You should change this.  CHANGE ME!!
     b_too_small                     = feature_tbl.Area <= 5000;
     
     feature_tbl(b_too_small,:)      = [];
-<<<<<<< HEAD
-=======
     disp("Feature Table after tossing out dirt components");
     disp(feature_tbl);
->>>>>>> 331e5174a866ae05b8b1f96eb22ec67f64f8fdf7
+    disp("Feature Table after tossing out dirt components");
+    disp(feature_tbl);
 
     if ( size(feature_tbl,1) == 0 )
         %  THIS IS DIRT:
